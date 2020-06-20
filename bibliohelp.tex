@@ -1,0 +1,271 @@
+\chapter{Citations}
+
+You can cite sources in two ways.  First, you can use the citation as
+a noun: \textcite[Chapter~8.8.4]{aho-compilers} briefly discuss the
+use of graph coloring in the register allocation phase of a compiler.
+In this case, use the \string\textcite\ command.  Second, you can use
+a citation as a parenthetical, which is not read aloud: Graph coloring
+is one possibile way to allocate
+registers \parencite[Chapter~8.8.4]{aho-compilers}.  Use the
+\string\parencite\ command for this.
+
+Both commands (\string\textcite\ and \string\parencite) take three
+parameters, two of which are optional.  The first (optional) parameter
+is a pre-note, the second (optional) parameter is a post-note, and the
+third (mandatory) parameter is the citation
+key \parencite[see][Section~3.7]{biblatex-manual}.  The citation in
+the preceding sentence was made using the following command:
+
+\begingroup\footnotesize
+\begin{verbatim}
+\parencite[see][Section~3.7]{biblatex-manual}
+\end{verbatim}
+\endgroup
+
+If you give these commands just one optional argument (that is, one
+enclosed in square brackets), it will be interpreted as a post-note.
+If you want to give only a pre-note, leave the post-note empty
+\parencite[see][]{biblatex-manual}:
+
+\begingroup\footnotesize
+\begin{verbatim}
+\parencite[see][]{biblatex-manual}
+\end{verbatim}
+\endgroup
+
+It is also possible to cite multiple sources in the same citation
+%
+\parencites%
+  [see][Section~3.7]{biblatex-manual}%
+  [regarding citations in general, see also][Section~5.3.2]%
+    {biblatex-chicago-manual}%
+\relax.
+%
+Use the command  \string\parencites\
+for this.  For each citation, give it the same parameters as you would give
+a single \string\parencite\
+command.  It is good practice (but often not necessary) to end the command
+in a \string\relax, so that no surprises ensue.
+
+\begingroup\footnotesize
+\begin{verbatim}
+\parencites%
+  [see][Section~3.7]{biblatex-manual}%
+  [regarding citations in general, see also][Section~5.3.2]%
+    {biblatex-chicago-manual}%
+\relax.
+\end{verbatim}
+\endgroup
+
+If you break the command into multiple lines, use the comment sign
+to end each line, to prevent spurious spaces.
+
+\section{The bibliography database}
+
+You should add all the sources you want to cite in a separate
+bibliography database written on the \textsc{Bib\TeX} format.  You can
+use many bibliographical tools in creating and maintaining it, but it
+is perfectly possible to write it by hand.  The name of your
+bibliography database must be given as an argument to the
+\string\addbibresource\ command.
+
+The database in \textsc{Bib\TeX} format is a text file following
+special formatting rules.  It consists of records, each of which
+starts with an @~sign, which is then followed by the type of the
+record.  The rest of the record goes inside curly braces.  For example,
+the compilers book cited earlier \parencite{aho-compilers} can be
+represented as the following record:
+
+\begingroup\footnotesize
+\begin{verbatim}
+@Book{aho-compilers,
+  author =       {Alfred V. Aho and Monica S. Lam and Ravi Sethi and
+                  Jeffrey D. Ullman},
+  title =        {Compilers},
+  subtitle =     {Principles, Techniques, \& Tools},
+  publisher =    {Pearson Addison Wesley},
+  year =         2007,
+  address =      {Boston},
+  edition =      2
+}
+\end{verbatim}
+\endgroup%
+
+The type of this record is ``book''.  The first word inside the curly
+braces is the citation key, which is used in the \string\textcite\ and
+\string\parencite\ commands.  It is followed by a comma and a set of
+named fields like ``author'', ``title'', ``subtitle'' and
+``publisher''.  The content of the field is written inside curly
+braces, although numerical data can be written without them.
+
+The names of the authors are written mainly in the conventional way.
+An alternative is to invert it, giving the surname first, followed by
+a comma and the first name (``Aho, Alfred V.''), and in some special
+cases this is mandatory.\footnote{For example, if the author has a
+  double surname without a hyphen separating them; as one example, the
+  name of Simon Peyton Jones should be written in the database as
+  ``Peyton Jones, Simon''.}  If there are multiple authors, their
+names must be separated by an ``and''.  If you do not list all
+authors, put ``and others'' after the last listed name.
+
+If the author of some source is an organization, its name must be written
+within another set of curly braces \parencite[eg.][]{unicode620}:
+
+\begingroup\footnotesize
+\begin{verbatim}
+@Book{unicode620,
+  author =       {{Unicode Consortium}},
+  title =        {The Unicode Standard, Version 6.2.0},
+  year =         {2012},
+  url =          {http://www.unicode.org/versions/Unicode6.2.0/},
+  urldate =      {2013-01-29}
+}
+\end{verbatim}
+\endgroup
+
+If a source, for some reson, has no named author, leave the ``author''
+field out ntirely.  In that case, the citation uses the source's
+title \parencite[eg.][]{presidential-novel}:
+
+\begingroup\footnotesize
+\begin{verbatim}
+@Book{presidential-novel,
+  title =        {O},
+  subtitle =     {A Presidential Novel},
+  publisher =    {Simon \& Schuster},
+  year =         {2011},
+}
+\end{verbatim}
+\endgroup
+
+A journal article \parencite[eg.][]{strachey-fundamentals} is given a
+record like the following:
+
+\begingroup\footnotesize
+\begin{verbatim}
+@Article{strachey-fundamentals,
+  author =       {Christopher Strachey},
+  title =        {Fundamental Concepts in Programming Languages},
+  journal =      {Higher-Order and Symbolic Computation},
+  year =         2000,
+  volume =       13,
+  number =       {1--2},
+  pages =        {11--49},
+  doi =          {10.1023/A:1010000313106}
+}
+\end{verbatim}
+\endgroup
+
+Note especially the field ``doi'', in which you can write the Digital
+Object Idenifier (DOI) of the article.  It is usually a better choice
+than any URL, as the DOI is a permanent identifier for the article.
+Most DOIs are also convertible to URLs by prepending
+\url{http://dx.doi.org/}.
+
+If the DOI of an online source is not known (or there is none at all),
+you can use the ``url'' field.  In that case, you should also give the
+date on which you read the source, in the field ``urldate'' (using the
+international standard format YYYY--MM--DD).  You should choose the
+address with great care, so that it is as precise as possible and
+remains valid as long as possible.  If the page has a specially
+indicated permanent link (or permalink), use it.
+
+When citing a WWW page that is not a book or an article or any other
+formal publication, you can use the ``online'' record
+type \parencite[eg.][]{debian-social-contract}:
+
+\begingroup\footnotesize
+\begin{verbatim}
+@Online{debian-social-contract,
+  title =        {Debian Social Contract},
+  year =         {2004},
+  url =          {http://www.debian.org/social_contract.en.html},
+  urldate =      {2013-01-29}
+}
+\end{verbatim}
+\endgroup
+
+Some sources are edited collections of independent articles.  In that
+case, you should generally cite a specific article in
+it \parencite[eg.][]{prechelt-credibility} instead of the full
+collection.  Even then, you should add both the collection and the
+cited article as their own records, and use a ``crossref'' field in
+the article record to refer to the collection:\footnote{It is
+  permissible to combine the article and the collection into one
+  InCollection record, for example if one cites only one article in
+  the collection.  In that case, the title of the collection goes in a
+  ``booktitle'' field, and no ``crossref'' field is used.}
+
+\begingroup\footnotesize
+\begin{verbatim}
+@Collection{making-software,
+  editor =       {Andy Oram and Greg Wilson},
+  title =        {Making Software},
+  subtitle =     {What Really Works, and Why We Believe It},
+  publisher =    {O'Reilly},
+  year =         2011
+}
+@InCollection{prechelt-credibility,
+  author =       {Lutz Prechelt and Marian Petre},
+  title =        {Credibility, or Why Should I Insist on Being
+                  Convinced},
+  crossref =     {making-software},
+  pages =        {17--34}
+}
+\end{verbatim}
+\endgroup
+
+Note that a collection has an ``editor'' instead of an ``author''.
+
+For more information about the structure of a bibliography databasem
+see the \textsc{Bib\TeX} manual \parencite{bibtexing},
+the \textsc{Bib\LaTeX} manual \parencite[Section~2]{biblatex-manual},
+and the \textsc{Bib\LaTeX}-Chicago manual
+\parencite[Sections 5.1--5.2]{biblatex-chicago-manual}.  There are
+also more examples in the source code of this document.
+
+
+\section{The bibliography}
+
+The bibliography database is converted into the bibliography by using
+the utility program {biber}.  It is fairly new, and is often missing
+from machines whose \TeX\ installation is not up to date.  Of the
+ssh-accessible Linux servers of the University, only charra.it.jyu.fi
+has it at this time.  It is installable in Ubuntu since version~12.10
+(Quantal Quetzal) and in Debian since version~7 (Wheezy).  For
+Windows, use the 32-bit Mik\TeX\ package
+miktex-biber-bin.\footnote{Last I looked, there was no 64-bit package
+  of biber for Mik\TeX.}
+
+On the command line, biber is simple to use.  Once \LaTeX (or
+pdf\LaTeX) has been run once, invoke biber with the document name
+(without the .tex part) as its argument.  After that, run \LaTeX\ (or
+pdf\LaTeX) at least once, until the latest run does not request
+another run.  For example:
+
+\begingroup\footnotesize
+\begin{verbatim}
+$ pdflatex malliopas
+[...]
+Package biblatex Warning: Please (re)run Biber on the file:
+(biblatex)                malliopas
+(biblatex)                and rerun LaTeX afterwards.
+[..]
+Output written on malliopas.pdf (18 pages, 96855 bytes).
+Transcript written on malliopas.log.
+$ biber malliopas
+INFO - This is Biber 0.9.9
+[...]
+INFO - Output to malliopas.bbl
+$ pdflatex malliopas
+[...]
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+[...]
+Output written on malliopas.pdf (21 pages, 107373 bytes).
+Transcript written on malliopas.log.
+$ pdflatex malliopas
+[...]
+Output written on malliopas.pdf (21 pages, 107509 bytes).
+Transcript written on malliopas.log.
+\end{verbatim}
+\endgroup

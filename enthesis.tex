@@ -1,0 +1,182 @@
+\documentclass[utf8,bachelor,english,draft]{gradu3}
+
+\usepackage{graphicx} % for including pictures
+
+\usepackage{amsmath} % useful for math
+
+\usepackage{booktabs} % good for beautiful tables
+
+% NOTE: This must be the last \usepackage in the whole document!
+\usepackage[bookmarksopen,bookmarksnumbered,linktocpage]{hyperref}
+
+%\addbibresource{malliopas.bib} % The file name of your bibliography database
+
+\begin{document}
+\title{Montecarlo Simulation for >WRITE A REAL TITLE<}
+
+\keywords{Bachelor's Theses, GEANT4, >INSERT REAL KEYWODRS<}
+
+\abstract{%
+  This is where my abstract would go?
+}
+
+\author{Charlie Woodrow}
+\contactinformation{\texttt{charlotte.woodrow@q3w3e3.dev}}
+% use a separate \author command for each author, if there is more than one
+\supervisor{Philip Voss}
+% use a separate \supervisor command for each supervisor, if there
+% is more than one
+\subject{in Physics}
+\university{Albion College}
+\department{Department of Physics}
+
+\maketitle
+
+\preface
+This is where I can write a preface if I want?
+
+Charlie Woodrow, \today
+
+\bigskip
+
+The Author
+
+\begin{thetermlist}
+\item[Do I want to keep this section] Just a glossary 
+\end{thetermlist}
+
+\mainmatter
+
+\chapter{Introduction}
+    \section{Motivation for lifetime measurement}
+    \section{Experimental details}
+    \section{Introduction to the simulation code}
+
+\chapter{Installation and Software details}
+
+    \section{Radware}
+        \begin{itemize}
+            \item xquartz/x11 issues at first
+            \item Radware was easy, though some files had to be modified to get all channels to read from the file
+        \end{itemize}
+    \section{GEANT4 and ROOT}
+        \begin{itemize}
+            \item Issues with x11 headers missing and anaconda???
+            \item Issues with more x11 calls?
+            \item Clhep base directory issues (maybe there were issues with clhep other than the version)
+            \item Issues with ROOT calls? (maybe it wasnt installed without issue) (\$PATH issues because of ROOT install directory)
+            \item Linker fails:
+            \begin{itemize}
+                \item -lgcov was replaced.
+                \item I just went into all the makefiles and swapped the -lgcov flag with --coverage
+            \end{itemize} 
+            \item Still having issues with:
+            \begin{itemize}
+                \item Tgframe.h still “missing” (from root)
+                \item “ld: library not found for -lMinuit
+                      clang: error: linker command failed with exit code 1”
+            \end{itemize}
+            \item Could not fix library issues on OSX
+            \begin{itemize}
+                \item MacOS
+                \begin{itemize}
+                    \item Issues with XCode
+                    \item Issues with linker (documented in email)
+                    \item CLang version naming????
+                    \item Difficulty running old compiler on MacOS(caused by XCode)
+                \end{itemize}
+            \item Selection of ubuntu 12.04
+            \begin{itemize}
+                \item Installation went super smoothly
+            \end{itemize}
+            \end{itemize}
+        \end{itemize}
+        
+    \section{\textsuperscript{37}Ar specific code}
+        \subsection{Detector specific changes}
+        \subsection{Reaction specific changes}
+
+\chapter{Preliminary Comparisons}
+    \section{Particle energy deposits in pin array}
+        \subsection{Beam properties}
+            \begin{figure}[h!]
+                \includegraphics[width=\linewidth]{test.png}
+                \caption{A test.}
+                \label{fig:test1}
+            \end{figure}
+
+        Figure \ref{fig:test1} shows a test image.
+        
+        \subsection{Target properties}
+        \subsection{Reaction properties}
+        
+    \section{$\gamma$-ray lineshapes}
+        \begin{figure}[h!]
+            \includegraphics[width=\linewidth]{test.png}
+            \caption{A test.}
+            \label{fig:test2}
+        \end{figure}
+        Figure \ref{fig:test2} shows a test image.
+
+\chapter{Discussion and Conclussion}
+    \section{Key contributions}
+    \section{Main results and current status}
+    \section{Future efforts}
+
+\chapter{Special properties of the document class}
+
+Generally, {gradu3} behaves like the report document class that is shipped
+with \LaTeX.  There are, however, some differences:
+\begin{itemize}
+\item no need to load the packages {inputenc}, {fontenc},
+  and {babel}.
+\item Specify the metadata of thesis using the commands given in
+  Table~\ref{tbl:metatiedot}.  They must be given before the
+  {\string\maketitle} command.
+\begin{table}[h]\centering
+  \begin{tabular}{lp{9cm}}
+    \toprule
+    Command & Meaning \\
+    \midrule
+    {\string\title}
+    & The title of the thesis (do not use the {\string\thanks} command... it breaks things...) \\
+    {\string\abstract}
+    & Abstract \\
+    {\string\keywords}
+    & Keywords \\
+    {\string\author}
+    & Author's name (if multiple authors, give each their own command 
+      -- the {\string\and} command is not supported) \\
+    {\string\contactinformation}
+    & The contact information of the author \\
+    {\string\supervisor}
+    & The supervisor of the thesis (if multiple supervisor, give each their own command; optional if using the bachelor option)\\
+    \bottomrule
+  \end{tabular}
+  \caption{Commands for declaring metadata}\label{tbl:metatiedot}
+\end{table}
+\item Write a preface after the
+  \string\maketitle\ command.  Use the \string\preface\ to start it.
+\item Write a list of terms by
+  using the thetermlist environment.  Inside it, you can use the
+  \string\item[\textit{term}] command to indicate which term you are
+  defining.
+\item After \string\maketitle, preface (if any), and term list (if any),
+  use the \string\mainmatter\ command.  It will automatically generate
+  the tables of contents, figures, and tables that are needful.
+\item The commands \string\subsubsection, \string\paragraph{} ja
+  \string\subparagraph{} are not supported.
+\item Appendices are not \string\chapter s, they are %
+  \string\section s.
+\end{itemize}
+
+
+%prints from .bib file see "bibliohelp.tex" for bib help
+% \printbibliography
+
+\appendix
+
+\section{appendix section}
+
+
+\end{document}
